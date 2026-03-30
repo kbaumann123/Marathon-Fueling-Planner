@@ -461,15 +461,14 @@ export default function RunnerFuelPlanner() {
     const hours = fuelMode === "time" ? duration / 60 : null;
 
     return (
-      <div id="print-area" style={{ display: "none" }}>
+      <div id="print-area" style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: -1, opacity: 0, pointerEvents: "none" }}>
         <style>{`
           @media print {
             body * { visibility: hidden !important; }
-            #print-area, #print-area * { visibility: visible !important; }
+            #print-area, #print-area * { visibility: visible !important; opacity: 1 !important; }
             #print-area {
               position: fixed; left: 0; top: 0; width: 100%;
               background: white; z-index: 9999;
-              font-family: 'Montserrat', sans-serif;
             }
             .no-print { display: none !important; }
             @page { margin: 0; }
