@@ -1,6 +1,5 @@
-import { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef } from "react";
 
-// ── Google Fonts ──────────────────────────────────────────────────────────
 // ── Brand ────────────────────────────────────────────────────────────────
 const B = {
   navy: "#2b3249",
@@ -354,6 +353,14 @@ export default function RunnerFuelPlanner() {
 
   const printRef = useRef();
 
+  // Responsive breakpoint
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 600);
+  React.useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 600);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
   // Checkpoints — keys differ by mode
   // Time mode: integer minutes (e.g. 30, 60, 90)
   // Distance mode: strings like "3mi" or "5km"
@@ -691,7 +698,7 @@ export default function RunnerFuelPlanner() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 16px 140px" }}>
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: isMobile ? "16px 10px 180px" : "24px 16px 140px" }}>
 
         {/* INTRO BANNER */}
         <div style={{
@@ -716,7 +723,7 @@ export default function RunnerFuelPlanner() {
           </div>
 
           {/* 3-step overview */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 12, marginBottom: 20 }}>
             {[
               { n: "1", title: "Set Your Targets", body: "Your hourly carb, fluid, and sodium goals are pre-filled with solid starting points — adjust them to match your training and sweat rate." },
               { n: "2", title: "Browse & Plan", body: "Pick your favourite race-day products and tap each checkpoint to assign them. Your plan builds in real time." },
@@ -771,7 +778,7 @@ export default function RunnerFuelPlanner() {
               That's totally okay! The pre-filled values are a solid starting point based on evidence-based guidelines for endurance athletes. If you've worked with a sports dietitian or know your sweat rate, feel free to adjust them. Not sure where to begin? Kristy's resources can help you dial in your personal targets before race day.
             </div>
           )}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: isMobile ? 10 : 16 }}>
 
             {/* Carbs */}
             <div>
@@ -879,12 +886,12 @@ export default function RunnerFuelPlanner() {
                       style={{ ...inputStyle, width: 72, textAlign: "center" }} />
                     <span style={{ fontFamily: FB, fontWeight: 700, fontSize: 13, color: B.textBody }}>min</span>
                   </div>
-                  <div style={{ fontFamily: FB, fontSize: 12, color: B.textBody, marginLeft: 4 }}>
+                  {!isMobile && <div style={{ fontFamily: FB, fontSize: 12, color: B.textBody, marginLeft: 4 }}>
                     = <span style={{ fontFamily: FF, fontWeight: 800, color: B.navy }}>{duration} min total</span>
-                  </div>
+                  </div>}
                 </div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 12 }}>
                 <div>
                   <label style={{ fontFamily: FF, fontWeight: 700, fontSize: 11, color: B.textBody, letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: 5 }}>Fuel Every (min)</label>
                   <input type="number" value={interval} onChange={e => setInterval(Number(e.target.value))} style={inputStyle} />
@@ -937,7 +944,7 @@ export default function RunnerFuelPlanner() {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 12 }}>
                 <div>
                   <label style={{ fontFamily: FF, fontWeight: 700, fontSize: 11, color: B.textBody, letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: 5 }}>Fuel Every ({unitLabel})</label>
                   <input type="number" min="0.5" step="0.5" value={distInterval}
@@ -1330,15 +1337,20 @@ export default function RunnerFuelPlanner() {
 
         return (
           <div style={{
-            position: "fixed", bottom: 28, left: 0, right: 0, zIndex: 60,
+            position: "fixed",
+            bottom: isMobile ? 0 : 28,
+            left: 0, right: 0, zIndex: 60,
             display: "flex", justifyContent: "center", pointerEvents: "none"
           }}>
             <div style={{
-              background: B.navy, borderRadius: 16, padding: "12px 22px",
+              background: B.navy, borderRadius: isMobile ? 0 : 16,
+              padding: isMobile ? "8px 16px" : "12px 22px",
               boxShadow: "0 8px 32px rgba(43,50,73,0.35), 0 2px 8px rgba(0,0,0,0.2)",
-              display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap",
+              display: "flex", alignItems: "center", gap: isMobile ? 4 : 6,
+              flexWrap: "wrap",
               border: `1.5px solid ${B.navyLight}`, pointerEvents: "auto",
-              maxWidth: 760
+              maxWidth: isMobile ? "100%" : 760,
+              width: isMobile ? "100%" : "auto"
             }}>
               <span style={{ fontFamily: FF, fontWeight: 800, fontSize: 10, color: B.sand, letterSpacing: "0.1em", textTransform: "uppercase", marginRight: 6, whiteSpace: "nowrap" }}>
                 Live Plan
