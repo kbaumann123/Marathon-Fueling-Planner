@@ -512,10 +512,10 @@ export default function RunnerFuelPlanner() {
           {/* ── SAND ACCENT BAR ── */}
           <div style={{ height: 4, background: `linear-gradient(90deg, ${B.sand}, ${B.mauve})` }} />
 
-          <div style={{ padding: "24px 32px" }}>
+          <div style={{ padding: "16px 32px" }}>
 
             {/* ── HOURLY TARGETS ── */}
-            <div style={{ marginBottom: 22 }}>
+            <div style={{ marginBottom: 14 }}>
               <div style={{ fontFamily: FF, fontWeight: 800, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: B.textMuted, marginBottom: 10 }}>
                 Hourly Targets
               </div>
@@ -567,7 +567,7 @@ export default function RunnerFuelPlanner() {
                           </div>
                         </div>
                         {/* Products */}
-                        <div style={{ flex: 1, padding: "10px 14px" }}>
+                        <div style={{ flex: 1, padding: "7px 12px" }}>
                           {ids.map(id => {
                             const p = PRODUCTS.find(x => x.id === id);
                             if (!p) return null;
