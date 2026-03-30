@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef } from "react";
 
+// ── Google Fonts ──────────────────────────────────────────────────────────
 // ── Brand ────────────────────────────────────────────────────────────────
 const B = {
   navy: "#2b3249",
@@ -465,10 +466,12 @@ export default function RunnerFuelPlanner() {
         <style>{`
           @media print {
             body * { visibility: hidden !important; }
-            #print-area, #print-area * { visibility: visible !important; opacity: 1 !important; }
+            #print-area, #print-area * { visibility: visible !important; opacity: 1 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             #print-area {
               position: fixed; left: 0; top: 0; width: 100%;
               background: white; z-index: 9999;
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
             }
             .no-print { display: none !important; }
             @page { margin: 0; }
